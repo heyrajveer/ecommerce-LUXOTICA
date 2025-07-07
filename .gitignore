@@ -1,0 +1,15 @@
+# Backend
+node_modules/
+.env
+.env.*
+
+# Frontend
+client/node_modules/
+client/build/
+client/coverage/
+client/.env
+client/.env.*
+
+# Logs and system files
+*.log
+.DS_Store
