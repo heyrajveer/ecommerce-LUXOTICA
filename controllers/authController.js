@@ -7,8 +7,8 @@ dotenv.config();
 
 export const registerController = async (req, res) => {
   try {
-    const { name, email, password, phone, address, role } = req.body;
-    if (!name || !email || !password || !phone || !address) {
+    const { name, email, password, phone , address, answer} = req.body;
+    if (!name || !email || !password || !phone  || !address|| !answer ) {
       return res.status(401).send({
         success:false,
         message: "required all  filled",
@@ -29,9 +29,9 @@ export const registerController = async (req, res) => {
       password: hashedPassword,
       phone,
       address,
-      role,
+      answer,
     })
-   await  user.save();
+   await user.save();
     res.status(201).send({
         success: true,
         message: "user register successfully",
@@ -74,10 +74,12 @@ export const loginController = async (req, res) => {
         success: true,
         message: "succcessfully login",
       user: {
+        _id:user._id,
         name: user.name,
         email: user.email,
         phone: user.phone,
         address: user.address,
+        role:user.role,
       },
       token,
     });
@@ -112,6 +114,47 @@ export const isAdmin = async (req, res, next) => {
     return res.status(500).send({
         success: false,
       error,
+    });
+  }
+};
+export const forgotPasswordController = async (req, res) => {
+  const { email, answer, newPassword } = req.body;
+  try {
+    if (!email || !answer || !newPassword) {
+      console.log("wrong email")
+       res.status(400).send({
+        success: false,
+        message: "All fields are required"
+      });
+    }
+
+    // Find the user
+    const user = await userModel.findOne({ email ,answer});
+    if (!user) {
+      return res.status(404).send({
+        success: false,
+        message: "Wrong Email or Answer"
+      });
+    }
+
+    // Hash the new password
+    const hashedNewPassword = await hashPassword(newPassword);
+
+    // Update user password
+    await userModel.findByIdAndUpdate( user._id, {
+      password: hashedNewPassword
+    });
+
+    return  res.status(200).send({
+      success: true,
+      message: "Password Reset Successfully"
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Something went wrong",
+      error
     });
   }
 };

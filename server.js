@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import connectDB from "./database/db.js";
 import morgan from 'morgan';
 import authRoutes from "./routes/authRoutes.js";
-
+import categoryRoutes from './routes/categoryRoutes.js';
 dotenv.config();
 
 const app=express();
@@ -20,6 +20,9 @@ app.get('/',(req,res)=>{
     )
 })
 app.use('/api/v1/auth',authRoutes);
+
+app.use('/api/v1/category', categoryRoutes);
+
 
 const PORT = process.env.PORT ||8000;
 app.listen(PORT,()=>{
