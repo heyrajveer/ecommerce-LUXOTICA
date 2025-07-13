@@ -25,7 +25,7 @@ export const createCategoryController = async (req, res) => {
       slug: slugify(name),
     }).save();
 
-    // ✅ Missing Response Fixed Below:
+    //Missing Response Fixed Below:
     res.status(200).send({
       success: true,
       message: "New category created successfully",
