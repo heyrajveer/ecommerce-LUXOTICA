@@ -6,6 +6,7 @@ import {
   deleteProductController,
   getProductcontroller,
   getsingleProductController,
+  productFiltersController,
   productPhotoController,
   updateProductController,
 } from "../controllers/productController.js";
@@ -32,4 +33,5 @@ router.get("/single-product/:slug", getsingleProductController);
 //try to access bohot
 router.get("/product-photo/:pid", productPhotoController);
 router.delete("/delete-product/:pid", deleteProductController);
+router.post('/product-filters',productFiltersController);
 export default router;
