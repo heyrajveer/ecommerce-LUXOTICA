@@ -26,7 +26,7 @@ router.put(
   updateCategoryController
 );
 router.get("/get-category",categoryContoller);//there is no need of any type of middleware and authorization  bcoz 
-// anyone can able to search category without login
+// anyone can able to search category without login//not like that means admin already loggedin 
 router.get('/single-category/:slug',singleCategoryController)
 
 router.delete('/delete-category/:id',requireSignIn,isAdmin,deleteCategoryCOntroller);

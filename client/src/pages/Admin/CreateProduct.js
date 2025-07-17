@@ -85,7 +85,7 @@ const CreateProduct = () => {
               >
                 {categories?.map((c) => (
                   <Option key={c._id} value={c._id}>
-                    {c.name}
+                   {c.name}       {/* //option method to choose any */}
                   </Option>
 
                 ))}

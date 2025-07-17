@@ -20,7 +20,7 @@ const CreateCategory = () => {
         name,
       });
       if (data?.success) {
-        toast.success(`${name} is created`);
+        toast.success(`${name} is createcd`);
         getAllCategory();
         setName("");
       } else {

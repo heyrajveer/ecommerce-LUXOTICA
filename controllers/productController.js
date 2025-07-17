@@ -201,11 +201,12 @@ if (!product) {
 //filter
 export const productFiltersController =async(req,res)=>{
   try {
-    const {checked,radio} =req.body;
+    const {checked=[],radio=[]} =req.body;
     let args ={};
-    if(checked.length >0) args.category =checked
-    if(radio.length)  args.price=
-     {$gte: radio[0],
+
+    if(checked.length >0) args.category ={$in:checked};
+    if(radio.length) 
+       args.price={$gte: radio[0],
       $lte:radio[1]
     };
     const products =await productModel.find(args)
@@ -223,3 +224,74 @@ export const productFiltersController =async(req,res)=>{
     })
   }
 }
+//per page count
+export const productCountController =async(req,res)=>{
+  try {
+    
+    const total =await productModel.find({}).estimatedDocumentCount();
+    res.status(200).send({
+      success:true,
+      total,
+    })
+  } catch (error) {
+    console.log(error)
+    res.status(500).sme({
+      success:false,
+      message:"error in product count",
+      error,
+    
+    })
+  }
+}
+
+// product list base on page
+export const productListController = async (req, res) => {
+  try {
+    const perPage = 6;
+    const page = req.params.page ? parseInt(req.params.page) : 1;
+
+    const products = await productModel
+      .find({})
+      .select("-photo") // Exclude photo from listing
+      .skip((page - 1) * perPage)
+      .limit(perPage)
+      .sort({ createdAt: -1 });
+
+    res.status(200).send({
+      success: true,
+      message: "Products fetched successfully with pagination",
+      products,
+    });
+  } catch (error) {
+    console.log("Pagination error:", error);
+    res.status(500).send({
+      success: false,
+      message: "Error in pagination controller",
+      error: error.message,
+    });
+  }
+};
+export const searchProductController =async(req,res)=>{
+try {
+  const {keyword} =req.params;
+  const  result = await productModel.find({
+    $or:[ //used for  filterQuery 
+      {name:{$regex:keyword,$options:"i"}},
+      {description:{$regex:keyword,$options:"i"}}  //"i" stands for insensitive, so case-insensitive match (e.g., "apple" will match "Apple", "APPLE", etc.)
+    ]
+  }).select("-photo");
+  res.status(200).send({
+     success: true,
+    products: result,
+  })
+  
+} catch (error) {
+  console.log(error);
+  res.status(500).send({
+    success:false,
+    message:"error in searching  product",
+    error,
+  })
+}
+}
+
