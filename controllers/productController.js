@@ -294,4 +294,27 @@ try {
   })
 }
 }
+export const realtedProductController =async(req,res)=>{
+ try {
+  const {pid,cid} =req.params;
+  const products =await productModel.find({
+    category:cid,
+    _id:{$ne:pid}  // it using for not add this product in the similar ones
+
+  }).select("-photo").limit(3).populate("category");
+  res.status(200).send({
+    success:true,
+    products,
+  })
+
+ } catch (error) {
+  console.log(error)
+  res.status(500).send({
+    success:false,
+    message:"error while fetching similar products"
+    ,
+    error
+  })
+ }
+}
 
