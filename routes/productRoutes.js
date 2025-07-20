@@ -12,7 +12,8 @@ import {
   productPhotoController,
   updateProductController,
   searchProductController,
-  realtedProductController
+  realtedProductController,
+  productCategoryController
 } from "../controllers/productController.js";
 import ExpressFormidable from "express-formidable";
 const router = express.Router();
@@ -48,5 +49,8 @@ router.get('/product-list/:page',productListController);
 router.get('/search/:keyword',searchProductController);
  //similar product 
  router.get('/related-product/:pid/:cid',realtedProductController);
+
+ //category iwse product meand while i clink on category go all product in that category
+ router.get('/product-category/:slug', productCategoryController);
 
 export default router;

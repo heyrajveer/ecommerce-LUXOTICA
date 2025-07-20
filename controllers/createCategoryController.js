@@ -77,8 +77,8 @@ try {
     res.status(200).send({
         success:true,
         message:"all Category List",
-        category
-    })
+        category,
+    });
     
 } catch (error) {
     console.log(error)
