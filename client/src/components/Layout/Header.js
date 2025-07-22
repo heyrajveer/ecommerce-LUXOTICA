@@ -4,7 +4,10 @@ import { useAuth } from "../../context/auth";
 import toast from "react-hot-toast";
 import { SearchInput } from "../Form/SearchInput";
 import useCategory from "../../hooks/useCategory";
+import { useCart } from "../../context/Cart";
+import {Badge} from 'antd'
 const Header = () => {
+  const[ cart ]=useCart(); //we want  only get thats why we use cart only
   const [auth, setAuth] = useAuth();
   const navigate = useNavigate();
   const categories = useCategory();
@@ -111,9 +114,12 @@ const Header = () => {
             )}
 
             <li className="nav-item">
-              <NavLink to="/cart" className="nav-link">
-                Cart (0)
+              <Badge count={cart?.length}>
+      <NavLink to="/cart" className="nav-link">
+               Cart
               </NavLink>
+    </Badge>
+             
             </li>
           </ul>
         </div>
