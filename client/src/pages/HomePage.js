@@ -145,6 +145,7 @@ const HomePage = () => {
                     {p.description?.substring(0, 30)}...
                   </p>
                   <p className="card-text">${p.price}</p>
+                 
                   <div className="d-flex">
                     <button
                       className="btn btn-primary ms-2 "
@@ -152,13 +153,32 @@ const HomePage = () => {
                     >
                       More Details
                     </button>
-                    <button className="btn btn-secondary ms-1 " onClick={()=>{setCart([...cart,p])
-                    localStorage.setItem('cart',JSON.stringify([...cart,p]))
-                    toast.success("Item Added to Cart")
+                   <button
+  className="btn btn-secondary ms-1"
+  onClick={() => {
+    const existingItemIndex = cart.findIndex((item) => item._id === p._id);
+    let updatedCart = [];
 
-                    }}>
-                      ADD TO CART
-                    </button>
+    if (existingItemIndex !== -1) {
+      // Item exists → increase quantity
+      updatedCart = [...cart];
+      updatedCart[existingItemIndex].quantity =
+        (updatedCart[existingItemIndex].quantity || 1) + 1;
+
+      toast.success("Increased quantity in cart");
+    } else {
+      // Item doesn't exist → add with quantity 1
+      updatedCart = [...cart, { ...p, quantity: 1 }];
+      toast.success("Item Added to Cart");
+    }
+
+    setCart(updatedCart);
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+  }}
+>
+  ADD TO CART
+</button>
+
                   </div>
                 </div>
               </div>
