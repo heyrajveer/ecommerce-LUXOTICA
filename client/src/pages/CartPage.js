@@ -8,20 +8,20 @@ const CartPage = () => {
   const [cart, setCart] = useCart();
   const navigate = useNavigate();
 
-
-  const totalPrice =()=>{
+  const totalPrice = () => {
     try {
-      let total =0;
-      cart?.map((item)=> {total =  total + item.price})
-      return total.toLocaleString("en-US",{
-        style:"currency",
-        currency:"USD"
-      }
-      )
+      let total = 0;
+      cart?.map((item) => {
+        total = total + item.price;
+      });
+      return total.toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD",
+      });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
   // Function to remove item from cart
   const removeCartItem = (pid) => {
     try {
@@ -32,7 +32,6 @@ const CartPage = () => {
       console.log("Error removing item:", error);
     }
   };
-
 
   return (
     <Layout>
@@ -65,7 +64,7 @@ const CartPage = () => {
                   <p>{p.name}</p>
                   <p>{p.description.substring(0, 30)}</p>
                   <p>Price : {p.price}</p>
-                   <p>{p.quantity}</p>
+                  <p>{p.quantity}</p>
                   <button
                     className="btn btn-danger"
                     onClick={() => removeCartItem(p._id)}
@@ -81,6 +80,40 @@ const CartPage = () => {
             <p>Total | checkout | Payment </p>
             <hr />
             <h3>Total:{totalPrice()}</h3>
+            {auth?.user?.address ? (
+              <>
+                <div className="mb-3 p-3 ">
+                  <h4>Current Address:</h4>
+                  <h5>{auth?.user?.address}</h5>
+                  <button
+                    className="btn btn-outline-warning"
+                    onClick={() => navigate("/dashboard/user/profile")}
+                  >
+                    update Address
+                  </button>
+                </div>
+              </>
+            ) : (
+              <div className="mb-3">
+                {auth?.token ? (
+                  <button
+                    className="btn btn-outline-warning"
+                    onClick={() => navigate("/dashboard/user/profile")}
+                  >
+                    Upadate Address
+                  </button>
+                ) : (
+                  <button
+                    className="btn btn-outline-warning"
+                    onClick={() => navigate("/login",{
+                      state:"/cart",
+                    })}
+                  >
+                    Please Login to checkout
+                  </button>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>

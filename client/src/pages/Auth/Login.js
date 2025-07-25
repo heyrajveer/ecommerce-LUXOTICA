@@ -70,7 +70,7 @@ const navigate=useNavigate();
               required
             />
           </div>
-          <div  mb-4>
+          <div className=" mb-4">
             <button type="submit" className="btn btn-primary mt-4" onClick={()=> {navigate('/forgot-password')}}>
             forgot Passward
           </button>
