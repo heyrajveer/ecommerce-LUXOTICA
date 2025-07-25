@@ -3,6 +3,18 @@ import slugify from "slugify";
 import productModel from '../models/productModel.js'
 import categoryModel from '../models/categoryModel.js'
 import fs from "fs";
+import braintree from "braintree";
+
+
+//payment getway
+var gateway = new braintree.BraintreeGateway({
+  environment: braintree.Environment.Sandbox,
+  merchantId: "your_merchant_id",
+  publicKey: "your_public_key",
+  privateKey: "your_private_key",
+});
+
+
 
 export const createProductController = async (req, res) => {
 

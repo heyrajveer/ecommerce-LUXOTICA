@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema({
        require:true
     },
     address:{
-        type:String,
+        type:{}, //i pass object becos long address aaccept this one
         require:true
     },
     role:{
