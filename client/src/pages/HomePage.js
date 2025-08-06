@@ -39,13 +39,20 @@ const HomePage = () => {
 
   // Paginated products loader
   const getPaginatedProducts = useCallback(async () => {
-    try {
-      const { data } = await axios.get(`/api/v1/product/product-list/${page}`);
+  try {
+    const { data } = await axios.get(`/api/v1/product/product-list/${page}`);
+    
+    // Make sure data.products is an array
+    if (Array.isArray(data.products)) {
       setProducts((prev) => [...prev, ...data.products]);
-    } catch (error) {
-      console.log(error);
+    } else {
+      console.error("Invalid products data:", data.products);
     }
-  }, [page]);
+    
+  } catch (error) {
+    console.log(error);
+  }
+}, [page]);
 
   // Filtered products
   const filterProduct = useCallback(async () => {

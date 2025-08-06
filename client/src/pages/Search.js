@@ -2,7 +2,7 @@ import Layout from "../components/Layout/Layout";
 import { useSearch } from "../context/Search";
 
 export const Search = () => {
-  const [values, setValues] = useSearch();
+  const [values] = useSearch();
 
   return (
     <Layout title="Search results">

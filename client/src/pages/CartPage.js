@@ -2,17 +2,24 @@ import { useNavigate } from "react-router-dom";
 import Layout from "../components/Layout/Layout";
 import { useAuth } from "../context/auth";
 import { useCart } from "../context/Cart";
-
+import DropIn from "braintree-web-drop-in-react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 const CartPage = () => {
   const [auth] = useAuth();
   const [cart, setCart] = useCart();
   const navigate = useNavigate();
+  const [clientToken, setClientToken] = useState("");
+  const [instance, setInstance] = useState(null);
+  // eslint-disable-next-line
+  const [loading, setLoading] = useState(false);
 
   const totalPrice = () => {
     try {
       let total = 0;
       cart?.map((item) => {
-        total = total + item.price;
+        return (total = total + item.price);
       });
       return total.toLocaleString("en-US", {
         style: "currency",
@@ -30,6 +37,44 @@ const CartPage = () => {
       localStorage.setItem("cart", JSON.stringify(updatedCart));
     } catch (error) {
       console.log("Error removing item:", error);
+    }
+  };
+  //get payment gateway
+  const getToken = async () => {
+    try {
+      const { data } = await axios.get("/api/v1/product/braintree/token");
+      setClientToken(data?.clientToken);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getToken();
+  }, [auth?.token]);
+
+  const handlePayment = async () => {
+    try {
+      setLoading(true);
+      const { nonce } = await instance.requestPaymentMethod();
+      const { data } = await axios.post("/api/v1/product/braintree/payment", {
+        nonce,
+        cart,
+      });
+      if (data?.success) {
+        toast.success("Payment Completed Successfully");
+      } else {
+        toast.error("Payment failed");
+      }
+
+      setLoading(false);
+      localStorage.removeItem("cart");
+      setCart([]);
+      navigate("/dashboard/user/orders");
+      toast.success("Payment Completed Successfully ");
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
     }
   };
 
@@ -105,15 +150,34 @@ const CartPage = () => {
                 ) : (
                   <button
                     className="btn btn-outline-warning"
-                    onClick={() => navigate("/login",{
-                      state:"/cart",
-                    })}
+                    onClick={() =>
+                      navigate("/login", {
+                        state: "/cart",
+                      })
+                    }
                   >
                     Please Login to checkout
                   </button>
                 )}
               </div>
             )}
+            <div style={{ minHeight: "300px", border: "1px solid gray" }}>
+             
+                <DropIn
+                  options={{
+                    authorization: clientToken,
+                    paypal: {
+                      flow: "vault",
+                    },
+                  }}
+                  onInstance={(instance) => setInstance(instance)}
+                />
+                <button className="btn btn-primary"
+onClick={handlePayment}
+disabled={!loading || !instance || !auth?.user?.address}>
+  make payment
+                </button>
+            </div>
           </div>
         </div>
       </div>

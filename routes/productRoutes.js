@@ -13,9 +13,12 @@ import {
   updateProductController,
   searchProductController,
   realtedProductController,
-  productCategoryController
+  productCategoryController,
+  braintreeTokenController,
+  braintreePaymentController
 } from "../controllers/productController.js";
 import ExpressFormidable from "express-formidable";
+
 const router = express.Router();
 
 router.post(
@@ -53,4 +56,10 @@ router.get('/search/:keyword',searchProductController);
  //category iwse product meand while i clink on category go all product in that category
  router.get('/product-category/:slug', productCategoryController);
 
+ //payment routes
+ //token ye create hota he while u doing payment
+ router.get('/braintree/token',braintreeTokenController); 
+
+ //payment gateway
+ router.post('/braintree/payment',requireSignIn,braintreePaymentController); 
 export default router;

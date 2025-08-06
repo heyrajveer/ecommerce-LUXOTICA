@@ -98,7 +98,13 @@ const UpdateProduct = () => {
     let answer =window.prompt('are you sure want to delete this porduct')
     if(!answer)return ;
     const {data} =await axios.delete(`/api/v1/product/delete-product/${id}`);
-    toast.success("product deleted successfully")
+    
+if (data?.success) {
+  toast.success("product deleted successfully");
+  // remove the product from UI or navigate
+} else {
+  toast.error(data.message);
+}
     navigate('/dashboard/admin/products')
    } catch (error) {
     console.log(error)

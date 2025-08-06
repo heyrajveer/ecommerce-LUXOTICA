@@ -23,6 +23,7 @@ import ProductDetails from "./pages/ProductDetails";
 import Categories from "./pages/Categories";
 import { CategoryProduct } from "./pages/CategoryProduct";
 import CartPage from "./pages/CartPage";
+import PaymentPage from "./pages/PaymentPage";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
 
           <Route path="/categories" element={<Categories/>} />
          <Route path="/categories" element={<Categories/>} />
+         
          <Route path="/category/:slug" element={<CategoryProduct/>} />
           <Route path="/product/:slug" element={<ProductDetails />} />
         <Route path="/search" element={<Search />} />
@@ -42,6 +44,7 @@ function App() {
           <Route path="user/orders" element={<Orders />} />
           <Route path="user/profile" element={<Profile />} />
         
+
         </Route>
 
         <Route path="/dashboard" element={<AdminRoute />}>

@@ -3,7 +3,6 @@ import AdminMenu from "../../components/Layout/AdminMenu";
 import Layout from "../../components/Layout/Layout";
 import toast from "react-hot-toast";
 import axios from "axios";
-import { Card } from "antd";
 import { Link } from "react-router-dom";
 
 const Product = () => {
