@@ -6,6 +6,7 @@ import axios from "axios";
 import { Select } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 const { Option } = Select;
+const BASE_URL = process.env.REACT_APP_BACKEND_URL;
 
 const UpdateProduct = () => {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ const UpdateProduct = () => {
   // GET SINGLE PRODUCT
   const getSingleProduct = async () => {
     try {
-      const { data } = await axios.get(`/api/v1/product/single-product/${params.slug}`);
+      const { data } = await axios.get(`${BASE_URL}/api/v1/product/single-product/${params.slug}`);
       const p = data?.product;
 
    
@@ -50,7 +51,7 @@ const UpdateProduct = () => {
   //  GET ALL CATEGORIES
   const getAllCategory = async () => {
     try {
-      const { data } = await axios.get("/api/v1/category/get-category");
+      const { data } = await axios.get(`${BASE_URL}/api/v1/category/get-category`);
       if (data?.success) {
         setCategories(data?.category);
       }
@@ -78,7 +79,7 @@ const UpdateProduct = () => {
       productData.append("shipping", shipping);
     
       const { data } = await axios.put(
-        `/api/v1/product/update-product/${id}`,
+        `${BASE_URL}/api/v1/product/update-product/${id}`,
         productData
       );
 
@@ -97,7 +98,7 @@ const UpdateProduct = () => {
    try {
     let answer =window.prompt('are you sure want to delete this porduct')
     if(!answer)return ;
-    const {data} =await axios.delete(`/api/v1/product/delete-product/${id}`);
+    const {data} =await axios.delete(`${BASE_URL}/api/v1/product/delete-product/${id}`);
     
 if (data?.success) {
   toast.success("product deleted successfully");

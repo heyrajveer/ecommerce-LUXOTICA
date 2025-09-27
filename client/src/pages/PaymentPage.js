@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import DropIn from "braintree-web-drop-in-react";
 
+const BASE_URL = process.env.REACT_APP_BACKEND_URL;
+
 const PaymentPage = () => {
   const [clientToken, setClientToken] = useState(null);
   const [instance, setInstance] = useState(null);
@@ -9,7 +11,7 @@ const PaymentPage = () => {
   useEffect(() => {
     const getToken = async () => {
       try {
-        const res = await fetch("/api/v1/product/braintree/token");  // ✅ No localhost
+        const res = await fetch(`${BASE_URL}/api/v1/product/braintree/token`);
         const data = await res.json();
         setClientToken(data.clientToken || data.clientToken?.clientToken);
       } catch (err) {
@@ -23,7 +25,7 @@ const PaymentPage = () => {
     try {
       const { nonce } = await instance.requestPaymentMethod();
 
-      const res = await fetch("/api/v1/product/braintree/payment", {  // ✅ No localhost
+      const res = await fetch(`${BASE_URL}/api/v1/product/braintree/payment`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -3,6 +3,7 @@ import Layout from "../components/Layout/Layout";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+const BASE_URL = process.env.REACT_APP_BACKEND_URL;
 export const CategoryProduct = () => {
   const [products, setProducts] = useState([]);
   const [category, setCategory] = useState({});
@@ -11,7 +12,7 @@ export const CategoryProduct = () => {
 
   const getProductsBycat = useCallback(async () => {
     try {
-      const { data } = await axios.get(`/api/v1/product/product-category/${params.slug}`);
+      const { data } = await axios.get(`${BASE_URL}/api/v1/product/product-category/${params.slug}`);
       setProducts(data?.products);
       setCategory(data?.category);
     } catch (error) {

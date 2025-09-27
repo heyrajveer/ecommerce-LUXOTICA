@@ -3,7 +3,7 @@ import { useAuth } from "../../context/auth";
 import { Outlet } from "react-router-dom";
 import axios from "axios";
 import Spinner from "../Spinner";
-
+const BASE_URL = process.env.REACT_APP_BACKEND_URL;
 export default function AdminRoute() {
   const [ok, setOk] = useState(false);
   const [auth,setAuth] = useAuth();
@@ -11,7 +11,7 @@ export default function AdminRoute() {
   useEffect(() => {
     const authCheck = async () => {
       try {
-        const res = await axios.get("/api/v1/auth/admin-auth");
+        const res = await axios.get( `${BASE_URL}/api/v1/auth/admin-auth`);
         setOk(res.data.ok);
 
       } catch (error) {

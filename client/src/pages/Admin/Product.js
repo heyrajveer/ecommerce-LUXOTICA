@@ -4,12 +4,13 @@ import Layout from "../../components/Layout/Layout";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { Link } from "react-router-dom";
+const BASE_URL = process.env.REACT_APP_BACKEND_URL;
 
 const Product = () => {
   const [product, setProduct] = useState([]);
   const getAllProducts = async () => {
     try {
-      const { data } = await axios.get("/api/v1/product/get-product");
+      const { data } = await axios.get(`${BASE_URL}/api/v1/product/get-product`);
       setProduct(data.products);
     } catch (error) {
       console.log(error);

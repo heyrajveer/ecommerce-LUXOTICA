@@ -4,28 +4,35 @@ import connectDB from "./database/db.js";
 import morgan from 'morgan';
 import authRoutes from "./routes/authRoutes.js";
 import categoryRoutes from './routes/categoryRoutes.js';
-import productRoutes from './routes/productRoutes.js'
-dotenv.config();
+import productRoutes from './routes/productRoutes.js';
+import cors from "cors";
 
-const app=express();
+dotenv.config(); // Load .env
 
-connectDB();
+const app = express(); // <-- define app first!
+
+// Now you can use middlewares
+app.use(cors({
+  origin: ["http://localhost:3000", "https://your-frontend-domain.com"],
+  methods: ["GET","POST","PUT","DELETE"],
+  credentials: true
+}));
+
 app.use(express.json());
 app.use(morgan('dev'));
 
+connectDB();
 
-//rest api
-app.get('/',(req,res)=>{
-    res.send(
-          " <h1>ecommerce<c/h1>"
-    )
-})
-app.use('/api/v1/auth',authRoutes);
+// Routes
+app.get('/', (req,res) => {
+    res.send("<h1>ecommerce</h1>");
+});
+app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/category', categoryRoutes);
 app.use('/api/v1/product', productRoutes);
 
-
-const PORT = process.env.PORT ||8000;
-app.listen(PORT,()=>{
-    console.log(`server is lestening on ${process.env.PORT}`);
-})
+// Start server
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, () => {
+    console.log(`Server is listening on ${PORT}`);
+});

@@ -6,7 +6,7 @@ import { Checkbox, Radio } from "antd";
 import { Prices } from "../context/Prices";
 import { useCart } from "../context/Cart";
 import toast from "react-hot-toast";
-
+const BASE_URL = process.env.REACT_APP_BACKEND_URL;
 const HomePage = () => {
   const [cart,setCart] =useCart();
   const [products, setProducts] = useState([]);
@@ -20,7 +20,7 @@ const HomePage = () => {
   // Get all categories
   const getAllCategory = useCallback(async () => {
     try {
-      const { data } = await axios.get("/api/v1/category/get-category");
+      const { data } = await axios.get(`${BASE_URL}/api/v1/category/get-category`);
       if (data.success) setCategories(data.category);
     } catch (error) {
       console.log(error);
@@ -30,7 +30,7 @@ const HomePage = () => {
   // Get total product count
   const getTotal = useCallback(async () => {
     try {
-      const { data } = await axios.get("/api/v1/product/product-count");
+      const { data } = await axios.get(`${BASE_URL}/api/v1/product/product-count`);
       setTotal(data?.total);
     } catch (error) {
       console.log(error);
@@ -40,7 +40,7 @@ const HomePage = () => {
   // Paginated products loader
   const getPaginatedProducts = useCallback(async () => {
   try {
-    const { data } = await axios.get(`/api/v1/product/product-list/${page}`);
+    const { data } = await axios.get(`${BASE_URL}/api/v1/product/product-list/${page}`);
     
     // Make sure data.products is an array
     if (Array.isArray(data.products)) {
@@ -57,7 +57,7 @@ const HomePage = () => {
   // Filtered products
   const filterProduct = useCallback(async () => {
     try {
-      const { data } = await axios.post("/api/v1/product/product-filters", {
+      const { data } = await axios.post(`${BASE_URL}/api/v1/product/product-filters`, {
         checked,
         radio,
       });
@@ -141,7 +141,7 @@ const HomePage = () => {
             {products?.map((p) => (
               <div className="card m-2" style={{ width: "18rem" }} key={p._id}>
                 <img
-                  src={`/api/v1/product/product-photo/${p._id}`}
+                  src={`${BASE_URL}/api/v1/product/product-photo/${p._id}`}
                   className="card-img-top"
                   alt={p.name}
                   style={{ height: "200px", objectFit: "cover" }}

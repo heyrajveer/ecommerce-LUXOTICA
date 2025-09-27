@@ -5,6 +5,7 @@ import { useNavigate ,useLocation} from "react-router-dom";
 import toast from 'react-hot-toast';
 import "../../styles/AuthStyles.css";
 import { useAuth } from "../../context/auth";
+const BASE_URL = process.env.REACT_APP_BACKEND_URL;
 
 // import { token } from "morgan";
 const Login = () => {
@@ -17,7 +18,7 @@ const navigate=useNavigate();
   const handleSubmit =async (e) => {
     e.preventDefault() ; // prevent page reload
     try {
-      const res= await axios.post('/api/v1/auth/login',
+      const res= await axios.post(`${BASE_URL}/api/v1/auth/login`,
         {email,
         password}
       ); 

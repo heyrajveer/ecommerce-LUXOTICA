@@ -4,7 +4,8 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import toast from 'react-hot-toast';
 import "../../styles/AuthStyles.css";
-  
+const BASE_URL = process.env.REACT_APP_BACKEND_URL;
+
 const Register = () => {
 
   const [name, setName] = useState("");
@@ -18,7 +19,7 @@ const Register = () => {
   const handleSubmit =async (e) => {
     e.preventDefault() ; // prevent page reload
     try {
-      const res= await axios.post('/api/v1/auth/register',
+      const res= await axios.post(`${BASE_URL}/api/v1/auth/register`,
         {name,email,password,phone,address,answer}
       );
       if(res.data.success){

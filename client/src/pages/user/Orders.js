@@ -3,13 +3,13 @@ import Layout from "../../components/Layout/Layout";
 import UserMenu from "../../components/Layout/UserMenu";
 import axios from "axios";
 import { useAuth } from "../../context/auth";
-
+const BASE_URL = process.env.REACT_APP_BACKEND_URL;
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [auth] = useAuth();
   const getOrders = async () => {
     try {
-      const { data } = await axios.get("/api/v1/auth/order");
+      const { data } = await axios.get(`${BASE_URL}/api/v1/auth/order`);
       setOrders(data);
     } catch (error) {
       console.log(error);

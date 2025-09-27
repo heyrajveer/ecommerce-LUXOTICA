@@ -5,6 +5,7 @@ import { useAuth } from "../../context/auth";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import "../../styles/AuthStyles.css";
+const BASE_URL = process.env.REACT_APP_BACKEND_URL;
 const Profile = () => {
   //context
   const [auth, setAuth] = useAuth();
@@ -28,7 +29,7 @@ const Profile = () => {
      
     e.preventDefault(); // prevent page reload
     try {
-      const {data}= await axios.put("/api/v1/auth/profile",
+      const {data}= await axios.put(`${BASE_URL}/api/v1/auth/profile`,
          {
         name,
         email,
