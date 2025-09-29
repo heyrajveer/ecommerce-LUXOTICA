@@ -3,7 +3,7 @@ import Layout from "../../components/Layout/Layout";
 import AdminMenu from "../../components/Layout/AdminMenu";
 import toast from "react-hot-toast";
 import axios from "axios";
-import CategoryForm from "../../components/Form/CategoryForm";
+import CategoryForm from "../../components/Form/CategoryFormTemp";
 import { Modal } from "antd";
 const BASE_URL = process.env.REACT_APP_BACKEND_URL;
 const CreateCategory = () => {
