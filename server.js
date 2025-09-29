@@ -13,10 +13,15 @@ const app = express(); // <-- define app first!
 
 // Now you can use middlewares
 app.use(cors({
-  origin: ["http://localhost:3000", "https://ecommerce-luxotica-git-main-hey-rajveers-projects.vercel.app/"],
+  origin: [
+    "http://localhost:3000", // local dev
+    "https://ecommerce-luxotica-git-main-hey-rajveers-projects.vercel.app",
+    "https://ecommerce-luxotica-356sw6ewj-hey-rajveers-projects.vercel.app" // production frontend
+  ],
   methods: ["GET","POST","PUT","DELETE"],
   credentials: true
 }));
+
 
 app.use(express.json());
 app.use(morgan('dev'));
