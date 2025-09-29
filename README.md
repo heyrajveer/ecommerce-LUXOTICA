@@ -1,4 +1,3 @@
-﻿# My E-commerce Project
 
 # E-commerce Luxotica
 
@@ -53,3 +52,4 @@ After several iterations, debugging, and learning deployment intricacies, I fina
 
 ```bash
 git clone https://github.com/yourusername/ecommerce-luxotica.git
+
