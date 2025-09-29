@@ -13,7 +13,7 @@ const app = express(); // <-- define app first!
 
 // Now you can use middlewares
 app.use(cors({
-  origin: ["http://localhost:3000", "https://your-frontend-domain.com"],
+  origin: ["http://localhost:3000", "https://ecommerce-luxotica-git-main-hey-rajveers-projects.vercel.app/"],
   methods: ["GET","POST","PUT","DELETE"],
   credentials: true
 }));
