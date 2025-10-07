@@ -15,9 +15,9 @@ const app = express(); // <-- define app first!
 app.use(cors({
   origin: [
     "http://localhost:3000", // local dev
-    "https://ecommerce-luxotica.vercel.app/"
+    "https://ecommerce-luxotica.vercel.app/",
     "https://ecommerce-luxotica-git-main-hey-rajveers-projects.vercel.app",
-    "https://ecommerce-luxotica-356sw6ewj-hey-rajveers-projects.vercel.app" // production frontend
+    // "https://ecommerce-luxotica-356sw6ewj-hey-rajveers-projects.vercel.app" // production frontend
     "ecommerce-luxotica-l8l3sy6jb-hey-rajveers-projects.vercel.app"
   ],
   methods: ["GET","POST","PUT","DELETE"],
